@@ -69,7 +69,7 @@ export default function Contact() {
       id="contact"
       style={{ borderBottom: '1px solid var(--border)', position: 'relative', zIndex: 5 }}
     >
-      <div style={{ padding: '80px 48px' }}>
+      <div style={{ padding: '80px 48px' }} className="section-content">
         {/* Header */}
         <div
           style={{
@@ -99,7 +99,7 @@ export default function Contact() {
 
         <div
           ref={ref}
-          className="reveal"
+          className="reveal contact-grid"
           style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
@@ -107,7 +107,7 @@ export default function Contact() {
           }}
         >
           {/* Left - Contact Form */}
-          <div>
+          <div className="contact-form">
             <div
               style={{
                 fontSize: 10,
@@ -174,7 +174,7 @@ export default function Contact() {
           </div>
 
           {/* Right - Social Links */}
-          <div>
+          <div className="contact-links">
             <div
               style={{
                 fontSize: 10,

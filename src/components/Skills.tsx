@@ -66,7 +66,7 @@ export default function Skills() {
       id="skills"
       style={{ borderBottom: '1px solid var(--border)', position: 'relative', zIndex: 5 }}
     >
-      <div style={{ padding: '80px 48px' }}>
+      <div style={{ padding: '80px 48px' }} className="section-content">
         {/* Header */}
         <div
           style={{
@@ -97,7 +97,7 @@ export default function Skills() {
         {/* Content */}
         <div
           ref={ref}
-          className="reveal"
+          className="reveal skills-grid"
           style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',

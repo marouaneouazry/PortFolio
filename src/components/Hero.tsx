@@ -70,20 +70,24 @@ export default function Hero() {
       }} />
 
       {/* VERTICAL CYAN LINE */}
-      <div style={{
-        position: 'absolute', left: 32, bottom: '10%', height: '80%',
-        width: 2, 
-        background: 'linear-gradient(to top, rgba(0,210,255,0.1) 0%, rgba(0,210,255,0.8) 50%, rgba(0,210,255,0.1) 100%)',
-        backgroundSize: '100% 200%',
-        zIndex: 10,
-        animation: 'chargeLine 2.5s linear infinite',
-      }} />
+      <div
+        className="hero-line"
+        style={{
+          position: 'absolute', left: 32, bottom: '10%', height: '80%',
+          width: 2, 
+          background: 'linear-gradient(to top, rgba(0,210,255,0.1) 0%, rgba(0,210,255,0.8) 50%, rgba(0,210,255,0.1) 100%)',
+          backgroundSize: '100% 200%',
+          zIndex: 10,
+          animation: 'chargeLine 2.5s linear infinite',
+        }}
+      />
 
       {/* PHOTO — full bleed right side */}
       <motion.div
         initial={{ opacity: 0, x: 60 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1, ease: 'easeOut' }}
+        className="hero-photo"
         style={{
           position: 'absolute', right: 0, top: 0, bottom: 0,
           width: '55%', zIndex: 2,
@@ -114,13 +118,16 @@ export default function Hero() {
         position: 'relative', zIndex: 10,
         padding: '140px 64px 80px 72px',
         maxWidth: '58%',
-      }}>
+      }}
+      className="hero-content"
+      >
 
         {/* Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
+          className="hero-eyebrow"
           style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}
         >
           <div style={{ width: 40, height: 1, background: '#00d2ff' }} />
@@ -164,6 +171,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.6 }}
+          className="hero-typewriter"
           style={{ fontSize: 13, color: '#64748b', margin: '20px 0 36px', fontFamily: 'JetBrains Mono, monospace' }}
         >
           <TypeAnimation

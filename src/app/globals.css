@@ -128,4 +128,62 @@ body::before {
 @media(max-width: 768px) {
   body { cursor: auto; }
   #cursor, #cursor-ring { display: none !important; }
+  
+  .hero-content {
+    padding: 520px 24px 40px 24px !important;
+    max-width: 100% !important;
+    text-align: center !important;
+  }
+  
+  .hero-eyebrow {
+    display: none !important;
+  }
+  
+  .hero-typewriter {
+    max-width: 100% !important;
+  }
+  
+  .hero-photo {
+    width: 100% !important;
+    height: 500px !important;
+    top: 60px !important;
+    left: 0 !important;
+    transform: none !important;
+    bottom: auto !important;
+  }
+  
+  .hero-line {
+    display: none !important;
+  }
+  
+  .section-content {
+    padding: 40px 24px !important;
+  }
+  
+  .footer-content {
+    padding: 16px 24px !important;
+  }
+  
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  
+  .contact-links {
+    order: -1 !important;
+  }
+  
+  .skills-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  
+  .about-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  
+  .about-terminal {
+    order: -1 !important;
+  }
 }

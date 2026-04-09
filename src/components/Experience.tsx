@@ -23,7 +23,7 @@ export default function Experience() {
       id="experience"
       style={{ borderBottom: '1px solid var(--border)', position: 'relative', zIndex: 5 }}
     >
-      <div style={{ padding: '80px 48px' }}>
+      <div style={{ padding: '80px 48px' }} className="section-content">
         {/* Header */}
         <div
           style={{

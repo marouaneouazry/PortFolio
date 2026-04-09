@@ -54,6 +54,7 @@ export default function Footer() {
         position: 'relative',
         zIndex: 5,
       }}
+      className="footer-content"
     >
       <div
         style={{

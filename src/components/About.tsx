@@ -156,7 +156,7 @@ export default function About() {
       id="about"
       style={{ borderBottom: '1px solid var(--border)', position: 'relative', zIndex: 5 }}
     >
-      <div style={{ padding: '80px 48px' }}>
+      <div style={{ padding: '80px 48px' }} className="section-content">
         {/* Header */}
         <div
           style={{
@@ -187,7 +187,7 @@ export default function About() {
         {/* Grid */}
         <div
           ref={ref}
-          className="reveal"
+          className="reveal about-grid"
           style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
@@ -195,7 +195,7 @@ export default function About() {
           }}
         >
           {/* Stats */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div className="about-stats" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <StatCard
               target={4}
               label="Years studying Computer Science"
@@ -224,6 +224,7 @@ export default function About() {
 
           {/* Terminal */}
           <div
+            className="about-terminal"
             style={{
               background: '#020810',
               border: '1px solid var(--border)',
