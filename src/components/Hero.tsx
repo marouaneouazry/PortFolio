@@ -24,6 +24,7 @@ export default function Hero() {
             const link = document.createElement('a')
             link.href = '/Marouane_Ouazry_Resume.pdf'
             link.download = 'Marouane_Ouazry_Resume.pdf'
+            link.target = '_blank'
             document.body.appendChild(link)
             link.click()
             document.body.removeChild(link)
@@ -91,7 +92,7 @@ export default function Hero() {
         style={{
           position: 'absolute', right: 0, top: 0, bottom: 0,
           width: '55%', zIndex: 2,
-        }}
+        } as any}
       >
         <Image
           src="/profile.png"
@@ -128,7 +129,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="hero-eyebrow"
-          style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}
+          style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 } as any}
         >
           <div style={{ width: 40, height: 1, background: '#00d2ff' }} />
           <span style={{ fontSize: 10, color: '#00d2ff', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
@@ -148,7 +149,7 @@ export default function Hero() {
             lineHeight: 0.95,
             letterSpacing: '-0.03em',
             marginBottom: 16,
-          }}
+          } as any}
         >
           <span style={{ display: 'block', color: '#f8fafc' }}>MAROUANE</span>
           <span style={{
@@ -172,7 +173,7 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.6 }}
           className="hero-typewriter"
-          style={{ fontSize: 13, color: '#64748b', margin: '20px 0 36px', fontFamily: 'JetBrains Mono, monospace' }}
+          style={{ fontSize: 13, color: '#64748b', margin: '20px 0 36px', fontFamily: 'JetBrains Mono, monospace' } as any}
         >
           <TypeAnimation
             sequence={[
@@ -194,7 +195,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6 }}
-          style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}
+          style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' } as any}
         >
           <button
             onClick={() => setIsTerminalOpen(true)}
