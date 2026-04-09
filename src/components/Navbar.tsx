@@ -42,11 +42,8 @@ export default function Navbar() {
         zIndex: 100,
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '18px 48px',
-        background: 'rgba(3,7,18,0.85)',
-        backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid var(--border)',
+        justifyContent: 'flex-start',
+        padding: '18px 48px 18px 18px',
       }}
     >
       <a
@@ -55,23 +52,24 @@ export default function Navbar() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          width: 20,
-          height: 20,
+          width: 28,
+          height: 28,
           cursor: 'pointer',
         }}
       >
-        <span
+        <div
           style={{
-            width: 16,
-            height: 16,
-            borderRadius: '50%',
-            background: 'var(--teal)',
-            animation: 'pulse 1.8s ease-in-out infinite',
+            width: 0,
+            height: 0,
+            borderLeft: '12px solid transparent',
+            borderRight: '12px solid transparent',
+            borderTop: '20px solid #00d2ff',
+            animation: 'chargeTriangle 2s ease-in-out infinite',
           }}
         />
       </a>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: 40 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 40, marginLeft: 40 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
           {navItems.map((item) => {
             const isContact = item.id === 'contact'
@@ -81,25 +79,29 @@ export default function Navbar() {
                 href={`#${item.id}`}
                 onMouseEnter={(e) => {
                   if (isContact) {
-                    e.currentTarget.style.transform = 'translateY(-2px)'
-                    e.currentTarget.style.boxShadow = '0 4px 25px rgba(0,210,255,0.5), 0 0 30px rgba(146,95,255,0.3)'
-                  } else if (active !== item.id) {
-                    e.currentTarget.style.color = 'var(--text)'
+                    e.currentTarget.style.background = 'rgba(0,210,255,0.1)'
+                    e.currentTarget.style.borderColor = 'var(--cyan)'
+                  } else if (active === item.id) {
+                    e.currentTarget.style.color = 'var(--cyan)'
+                  } else {
+                    e.currentTarget.style.color = 'rgba(148, 163, 184, 0.6)'
                   }
                 }}
                 onMouseLeave={(e) => {
                   if (isContact) {
-                    e.currentTarget.style.transform = 'translateY(0)'
-                    e.currentTarget.style.boxShadow = '0 0 20px rgba(0,210,255,0.2)'
-                  } else if (active !== item.id) {
-                    e.currentTarget.style.color = '#94a3b8'
+                    e.currentTarget.style.background = 'transparent'
+                    e.currentTarget.style.borderColor = 'var(--cyan)'
+                  } else if (active === item.id) {
+                    e.currentTarget.style.color = 'var(--cyan)'
+                  } else {
+                    e.currentTarget.style.color = 'rgba(148, 163, 184, 0.4)'
                   }
                 }}
                 style={{
                   fontSize: 12,
                   fontWeight: 700,
                   fontFamily: isContact ? 'JetBrains Mono, monospace' : 'inherit',
-                  color: isContact ? '#fff' : (active === item.id ? 'var(--cyan)' : '#94a3b8'),
+                  color: isContact ? 'var(--cyan)' : (active === item.id ? 'var(--cyan)' : 'rgba(148, 163, 184, 0.4)'),
                   letterSpacing: '0.14em',
                   textTransform: 'uppercase',
                   textDecoration: 'none',
@@ -109,14 +111,10 @@ export default function Navbar() {
                   alignItems: 'center',
                   height: 36,
                   padding: isContact ? '0 16px' : '0',
-                  border: isContact ? '1px solid rgba(0,210,255,0.3)' : 'none',
+                  border: isContact ? '1px solid var(--cyan)' : 'none',
                   borderRadius: isContact ? 8 : 0,
-                  background: isContact
-                    ? (active === item.id
-                      ? 'linear-gradient(135deg, #00d2ff 0%, #925fff 100%)'
-                      : 'linear-gradient(135deg, #00d2ff 0%, #925fff 100%)')
-                    : 'transparent',
-                  boxShadow: isContact ? '0 0 20px rgba(0,210,255,0.2)' : 'none',
+                  background: 'transparent',
+                  boxShadow: 'none',
                 }}
               >
                 {item.label}
@@ -143,6 +141,18 @@ export default function Navbar() {
         @keyframes pulse {
           0%, 100% { opacity: 1; transform: scale(1); }
           50% { opacity: 0.4; transform: scale(0.7); }
+        }
+        @keyframes chargeTriangle {
+          0%, 100% {
+            opacity: 0.6;
+            filter: drop-shadow(0 0 8px rgba(0, 210, 255, 0.6));
+            transform: scale(1);
+          }
+          50% {
+            opacity: 1;
+            filter: drop-shadow(0 0 16px rgba(0, 210, 255, 0.9));
+            transform: scale(1.1);
+          }
         }
       `}</style>
     </nav>

@@ -53,16 +53,36 @@ export default function Experience() {
 
         {/* Card */}
         <div ref={ref} className="reveal">
-          <div
+          <a
+            href="https://github.com/marouaneouazry/Big-Data-Pipeline"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
-              background: 'var(--bg2)',
-              border: '1px solid var(--border)',
-              borderRadius: 12,
-              padding: 18,
-              position: 'relative',
-              overflow: 'hidden',
+              textDecoration: 'none',
+              display: 'block',
             }}
           >
+            <div
+              style={{
+                background: 'var(--bg2)',
+                border: '1px solid var(--border)',
+                borderRadius: 12,
+                padding: 18,
+                position: 'relative',
+                overflow: 'hidden',
+                transition: 'border-color 0.25s, transform 0.25s, box-shadow 0.25s',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(56,189,248,0.4)'
+                e.currentTarget.style.transform = 'translateX(4px)'
+                e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,210,255,0.15)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'var(--border)'
+                e.currentTarget.style.transform = 'translateX(0)'
+                e.currentTarget.style.boxShadow = 'none'
+              }}
+            >
             {/* Top gradient line */}
             <div
               style={{
@@ -117,28 +137,16 @@ export default function Experience() {
             </div>
 
             {/* Project */}
-            <a
-              href="https://github.com/marouaneouazry/Big-Data-Pipeline"
-              target="_blank"
-              rel="noopener noreferrer"
+            <div
               style={{
                 fontSize: 12,
                 color: 'var(--purple-l)',
                 fontWeight: 700,
                 marginBottom: 12,
-                textDecoration: 'none',
-                display: 'inline-block',
-                transition: 'color 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = 'var(--cyan)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = 'var(--purple-l)'
               }}
             >
               Multi-Layer Big Data Pipeline — LakeHouse Management (Medallion Architecture) ↗
-            </a>
+            </div>
 
             {/* Bullets */}
             <ul
@@ -209,7 +217,8 @@ export default function Experience() {
                 }
               )}
             </div>
-          </div>
+            </div>
+          </a>
         </div>
       </div>
     </section>

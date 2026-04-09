@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 
 export default function Footer() {
   const prefix = 'git commit -m "'
-  const message = "From Morocco to wherever you're reading this — I built something I'm proud of."
+  const message = "Ready for the next build. — Let's CONNECT."
   const fullText = prefix + message
   const [visibleChars, setVisibleChars] = useState(0)
   const [isVisible, setIsVisible] = useState(false)

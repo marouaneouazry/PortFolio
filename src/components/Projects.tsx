@@ -107,20 +107,39 @@ export default function Projects() {
               style={{
                 display: 'flex',
                 alignItems: 'stretch',
-                border: '1px solid var(--border)',
+                border: '1px solid rgba(255,255,255,0.08)',
                 borderRadius: 12,
                 overflow: 'hidden',
-                transition: 'border-color 0.25s, transform 0.25s',
-                background: 'var(--bg2)',
+                transition: 'border-color 0.25s, transform 0.25s, box-shadow 0.25s',
+                background: 'rgba(3,7,18,0.6)',
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)',
                 textDecoration: 'none',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(56,189,248,0.3)'
-                e.currentTarget.style.transform = 'translateX(6px)'
+                e.currentTarget.style.borderColor = 'rgba(56,189,248,0.4)'
+                e.currentTarget.style.transform = 'translateX(6px) translateY(-2px)'
+                e.currentTarget.style.boxShadow = '0 8px 30px rgba(0,210,255,0.15)'
+                e.currentTarget.style.background = 'rgba(3,7,18,0.7)'
+                const arrow = e.currentTarget.querySelector('.project-arrow') as HTMLElement
+                if (arrow) {
+                  arrow.style.color = 'var(--cyan)'
+                  arrow.style.transform = 'translate(4px, -4px)'
+                  arrow.style.textShadow = '0 0 12px rgba(0,210,255,0.8)'
+                }
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'var(--border)'
-                e.currentTarget.style.transform = 'translateX(0)'
+                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'
+                e.currentTarget.style.transform = 'translateX(0) translateY(0)'
+                e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.3)'
+                e.currentTarget.style.background = 'rgba(3,7,18,0.6)'
+                const arrow = e.currentTarget.querySelector('.project-arrow') as HTMLElement
+                if (arrow) {
+                  arrow.style.color = 'var(--dim)'
+                  arrow.style.transform = 'translate(0, 0)'
+                  arrow.style.textShadow = 'none'
+                }
               }}
             >
               {/* Accent */}
@@ -155,7 +174,15 @@ export default function Projects() {
                   >
                     {project.name}
                   </span>
-                  <span style={{ fontSize: 16, color: 'var(--dim)', flexShrink: 0 }}>↗</span>
+                  <span 
+                    style={{ 
+                      fontSize: 16, 
+                      color: 'var(--dim)', 
+                      flexShrink: 0,
+                      transition: 'all 0.3s ease',
+                    }}
+                    className="project-arrow"
+                  >↗</span>
                 </div>
 
                 {/* Desc */}
