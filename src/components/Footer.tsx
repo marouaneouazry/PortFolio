@@ -43,7 +43,7 @@ export default function Footer() {
     <footer
       ref={footerRef}
       style={{
-        padding: '40px 48px',
+        padding: '16px 48px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',

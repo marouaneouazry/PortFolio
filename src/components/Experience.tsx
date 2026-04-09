@@ -58,7 +58,7 @@ export default function Experience() {
               background: 'var(--bg2)',
               border: '1px solid var(--border)',
               borderRadius: 12,
-              padding: 28,
+              padding: 18,
               position: 'relative',
               overflow: 'hidden',
             }}
@@ -146,7 +146,7 @@ export default function Experience() {
                 listStyle: 'none',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: 8,
+                gap: 2,
                 marginBottom: 20,
               }}
             >
@@ -182,7 +182,7 @@ export default function Experience() {
             </ul>
 
             {/* Tags */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
               {['Hadoop', 'HDFS', 'Spark', 'PySpark', 'NiFi', 'Airflow', 'Hive', 'Iceberg', 'Docker', 'Tableau'].map(
                 (tag) => {
                   const style = tagColors[tag] || {

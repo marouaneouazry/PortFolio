@@ -2,7 +2,38 @@
 
 import { useEffect, useRef } from 'react'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
-import { skills, techChips } from '@/lib/data'
+import { skills } from '@/lib/data'
+
+function TechChip({ name, color, borderColor }: { name: string; color: string; borderColor: string }) {
+  return (
+    <span
+      style={{
+        fontSize: 10,
+        color: 'var(--dim)',
+        letterSpacing: '0.06em',
+        background: 'rgba(8,15,31,0.6)',
+        border: `1px solid ${borderColor}`,
+        borderRadius: 4,
+        padding: '5px 11px',
+        backdropFilter: 'blur(8px)',
+        transition: 'border-color 0.2s, color 0.2s, box-shadow 0.2s',
+        cursor: 'default',
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = color
+        e.currentTarget.style.color = color
+        e.currentTarget.style.boxShadow = `0 0 10px ${color}40`
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = borderColor
+        e.currentTarget.style.color = 'var(--dim)'
+        e.currentTarget.style.boxShadow = 'none'
+      }}
+    >
+      {name}
+    </span>
+  )
+}
 
 export default function Skills() {
   const ref = useScrollReveal(0.3)
@@ -77,7 +108,8 @@ export default function Skills() {
           <div>
             <div
               style={{
-                fontSize: 10,
+                fontSize: 13,
+                fontWeight: 700,
                 color: 'var(--cyan)',
                 letterSpacing: '0.14em',
                 textTransform: 'uppercase',
@@ -97,13 +129,13 @@ export default function Skills() {
                       marginBottom: 7,
                     }}
                   >
-                    <span style={{ fontSize: 11, color: 'var(--muted)' }}>{skill.name}</span>
+                    <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--muted)' }}>{skill.name}</span>
                     <span style={{ fontSize: 10, color: skill.color }}>{skill.pct}%</span>
                   </div>
                   <div
                     style={{
-                      height: 2,
-                      background: 'var(--border2)',
+                      height: 3,
+                      background: 'rgba(255,255,255,0.08)',
                       borderRadius: 2,
                       overflow: 'hidden',
                     }}
@@ -117,6 +149,7 @@ export default function Skills() {
                         width: 0,
                         background: `linear-gradient(90deg, ${skill.color}, ${skill.color})`,
                         transition: 'width 1s ease-out',
+                        boxShadow: `0 0 8px ${skill.color}`,
                       }}
                     />
                   </div>
@@ -129,7 +162,8 @@ export default function Skills() {
           <div>
             <div
               style={{
-                fontSize: 10,
+                fontSize: 13,
+                fontWeight: 700,
                 color: 'var(--cyan)',
                 letterSpacing: '0.14em',
                 textTransform: 'uppercase',
@@ -139,33 +173,90 @@ export default function Skills() {
               // full tech arsenal
             </div>
 
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-              {techChips.map((chip, i) => (
-                <span
-                  key={i}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              {/* Languages */}
+              <div>
+                <div
                   style={{
-                    fontSize: 10,
-                    color: 'var(--dim)',
-                    letterSpacing: '0.06em',
-                    background: 'var(--bg3)',
-                    border: '1px solid var(--border)',
-                    borderRadius: 4,
-                    padding: '5px 11px',
-                    transition: 'border-color 0.2s, color 0.2s',
-                    cursor: 'default',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'var(--cyan)'
-                    e.currentTarget.style.color = 'var(--cyan)'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'var(--border)'
-                    e.currentTarget.style.color = 'var(--dim)'
+                    fontSize: 11,
+                    fontWeight: 700,
+                    color: 'var(--cyan)',
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    marginBottom: 8,
                   }}
                 >
-                  {chip}
-                </span>
-              ))}
+                  Languages
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                  {['Python','Java','C#','JavaScript','TypeScript','PHP','C / C++'].map((chip) => (
+                    <TechChip key={chip} name={chip} color="var(--cyan)" borderColor="rgba(56,189,248,0.3)" />
+                  ))}
+                </div>
+              </div>
+
+              {/* Frameworks */}
+              <div>
+                <div
+                  style={{
+                    fontSize: 11,
+                    fontWeight: 700,
+                    color: 'var(--purple-l)',
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    marginBottom: 8,
+                  }}
+                >
+                  Frameworks
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                  {['React.js','Angular','Node.js','Django','Spring Boot','ASP.NET Core','Symfony','React Native','Expo','Android Native'].map((chip) => (
+                    <TechChip key={chip} name={chip} color="var(--purple-l)" borderColor="rgba(167,139,250,0.3)" />
+                  ))}
+                </div>
+              </div>
+
+              {/* Data / Cloud */}
+              <div>
+                <div
+                  style={{
+                    fontSize: 11,
+                    fontWeight: 700,
+                    color: 'var(--green-l)',
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    marginBottom: 8,
+                  }}
+                >
+                  Data / Cloud
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                  {['Hadoop','Spark','PySpark','Apache NiFi','Airflow','Hive','Iceberg','Docker','Azure','Firebase','Tableau','REST API','GraphQL','Linux','Git'].map((chip) => (
+                    <TechChip key={chip} name={chip} color="var(--green-l)" borderColor="rgba(52,211,153,0.3)" />
+                  ))}
+                </div>
+              </div>
+
+              {/* Databases */}
+              <div>
+                <div
+                  style={{
+                    fontSize: 11,
+                    fontWeight: 700,
+                    color: 'var(--orange)',
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    marginBottom: 8,
+                  }}
+                >
+                  Databases
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                  {['MySQL','PostgreSQL','MongoDB','Neo4j','Cassandra','HBase','Oracle','SQL Server'].map((chip) => (
+                    <TechChip key={chip} name={chip} color="var(--orange)" borderColor="rgba(245,158,11,0.3)" />
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>

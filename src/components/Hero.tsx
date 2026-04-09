@@ -1,176 +1,53 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { TypeAnimation } from 'react-type-animation'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 
-const termLines = [
-  { type: 'cmd', content: '$ cat ./human.txt' },
-  { type: 'out', content: "→ I'm Marouane — 24, based in Mohammedia, Morocco." },
-  { type: 'dim', content: '  Engineer by training, builder by obsession.' },
-  { type: 'empty' },
-  { type: 'cmd', content: '$ cat ./personality.json' },
-  { type: 'hi', content: '→ { curious: true, detail_oriented: true, ships_things: true }' },
-  { type: 'dim', content: '  I get genuinely excited about elegant solutions.' },
-  { type: 'dim', content: '  The kind that just... feel right when you read the code.' },
-  { type: 'empty' },
-  { type: 'cmd', content: '$ cat ./outside_of_code.txt' },
-  { type: 'val', content: '→ Football, working out, movies & TV shows, music' },
-  { type: 'dim', content: '  and probably debugging something that "should work".' },
-  { type: 'empty' },
-  { type: 'cmd', content: '$ cat ./motivation.txt' },
-  { type: 'ok', content: '→ I build things because I want them to exist in the world.' },
-  { type: 'dim', content: '  Not just to pass a course. Not just for a grade.' },
-  { type: 'dim', content: '  To actually matter to someone using it.' },
-  { type: 'cursor' },
-]
+export default function Hero() {
+  const [downloadProgress, setDownloadProgress] = useState(0)
+  const [isDownloading, setIsDownloading] = useState(false)
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false)
 
-function TerminalModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  const [visibleLines, setVisibleLines] = useState(0)
-  const modalRef = useRef<HTMLDivElement>(null)
+  const handleDownload = () => {
+    if (isDownloading) return
+    setIsDownloading(true)
+    setDownloadProgress(0)
 
-  useEffect(() => {
-    if (isOpen) {
-      setVisibleLines(0)
-      let i = 0
-      const interval = setInterval(() => {
-        i++
-        setVisibleLines(i)
-        if (i >= termLines.length) clearInterval(interval)
-      }, 90)
-      return () => clearInterval(interval)
-    }
-  }, [isOpen])
+    let hasDownloaded = false
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-        onClose()
-      }
-    }
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside)
-      return () => document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [isOpen, onClose])
-
-  const getLineColor = (type: string) => {
-    switch (type) {
-      case 'cmd': return 'var(--cyan)'
-      case 'out': return 'var(--teal)'
-      case 'val': return 'var(--green-l)'
-      case 'dim': return 'var(--dim)'
-      case 'hi': return 'var(--purple-l)'
-      case 'ok': return 'var(--green)'
-      default: return 'var(--text)'
-    }
+    const interval = setInterval(() => {
+      setDownloadProgress((prev) => {
+        if (prev >= 100 && !hasDownloaded) {
+          hasDownloaded = true
+          clearInterval(interval)
+          setTimeout(() => {
+            const link = document.createElement('a')
+            link.href = '/Resume.pdf'
+            link.download = 'Marouane_Ouazry_Resume.pdf'
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+            setIsDownloading(false)
+            setDownloadProgress(0)
+          }, 300)
+          return 100
+        }
+        if (prev >= 100) return 100
+        return prev + Math.random() * 15 + 5
+      })
+    }, 150)
   }
 
-  if (!isOpen) return null
+  const renderProgressBar = () => {
+    const pct = Math.min(100, Math.max(0, Math.floor(downloadProgress)))
+    const filled = Math.min(20, Math.floor((pct / 100) * 20))
+    const empty = 20 - filled
+    const bar = '█'.repeat(filled) + '░'.repeat(empty)
+    return `[${bar}] ${pct}%`
+  }
 
-  return (
-    <div style={{
-      position: 'fixed',
-      top: 0, left: 0, right: 0, bottom: 0,
-      background: 'rgba(3,7,18,0.9)',
-      backdropFilter: 'blur(10px)',
-      zIndex: 10000,
-      display: 'flex',
-      alignItems: 'flex-start',
-      justifyContent: 'center',
-      padding: '96px 20px 20px',
-    }}>
-      <div
-        ref={modalRef}
-        style={{
-          background: '#020810',
-          border: '1px solid var(--border)',
-          borderRadius: 12,
-          overflow: 'hidden',
-          maxWidth: 750,
-          width: '100%',
-          maxHeight: 'calc(100vh - 120px)',
-          display: 'flex',
-          flexDirection: 'column',
-          boxShadow: '0 0 40px rgba(0,210,255,0.2)',
-        }}
-      >
-        {/* Header */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
-            padding: '11px 18px',
-            background: 'var(--bg3)',
-            borderBottom: '1px solid var(--border)',
-          }}
-        >
-          <div style={{ width: 11, height: 11, borderRadius: '50%', background: '#ef4444' }} />
-          <div style={{ width: 11, height: 11, borderRadius: '50%', background: '#f59e0b' }} />
-          <div style={{ width: 11, height: 11, borderRadius: '50%', background: '#10b981' }} />
-          <span style={{ fontSize: 10, color: 'var(--dim)', letterSpacing: '0.1em', marginLeft: 6 }}>
-            bash — portfolio/whoami.sh
-          </span>
-          <button
-            onClick={onClose}
-            style={{
-              marginLeft: 'auto',
-              background: 'transparent',
-              border: 'none',
-              color: 'var(--dim)',
-              fontSize: 18,
-              cursor: 'pointer',
-              padding: '0 4px',
-            }}
-          >
-            ×
-          </button>
-        </div>
-
-        {/* Body */}
-        <div style={{ padding: '18px 22px 12px', fontSize: 13, lineHeight: 2, overflow: 'auto' }}>
-          {termLines.slice(0, visibleLines).map((line, i) => (
-            <div key={i}>
-              {line.type === 'empty' ? (
-                <br />
-              ) : line.type === 'cursor' ? (
-                <span
-                  style={{
-                    display: 'inline-block',
-                    width: 2,
-                    height: 15,
-                    background: 'var(--cyan)',
-                    verticalAlign: 'middle',
-                    marginLeft: 2,
-                    animation: 'blink 1s step-end infinite',
-                  }}
-                />
-              ) : line.type === 'cmd' ? (
-                <span>
-                  <span style={{ color: 'var(--purple)' }}>$</span>{' '}
-                  <span style={{ color: 'var(--cyan)' }}>{line.content?.slice(2) || ''}</span>
-                </span>
-              ) : (
-                <span style={{ color: getLineColor(line.type) }}>{line.content || ''}</span>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-      <style>{`
-        @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0; }
-        }
-      `}</style>
-    </div>
-  )
-}
-
-export default function Hero() {
-  const [isTerminalOpen, setIsTerminalOpen] = useState(false)
   return (
     <section
       id="hero"
@@ -283,7 +160,7 @@ export default function Hero() {
           <div
             style={{
               fontSize: 13,
-              color: 'var(--muted)',
+              color: '#fff',
               maxWidth: 540,
               lineHeight: 1.9,
               margin: '24px 0 40px',
@@ -291,8 +168,6 @@ export default function Hero() {
           >
             <TypeAnimation
               sequence={[
-              '> get /user/marouane',
-                1500,
               '> Core: Full-Stack | AI | Data Engineering',
                 2000,
               '> Transforming Complex Problems into Production-Ready Code',
@@ -305,73 +180,68 @@ export default function Hero() {
               wrapper="span"
               repeat={Infinity}
               cursor={true}
+              speed={20}
+              deletionSpeed={80}
             />
           </div>
 
           {/* CTAs */}
           <div id="cta-row" style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
             <button
-              onClick={() =>
-                document
-                  .getElementById('projects')
-                  ?.scrollIntoView({ behavior: 'smooth' })
-              }
-              style={{
-                fontFamily: 'JetBrains Mono, monospace',
-                fontSize: 12,
-                fontWeight: 700,
-                background: 'linear-gradient(135deg, var(--purple), var(--cyan))',
-                color: '#fff',
-                border: '1px solid rgba(0,210,255,0.3)',
-                borderRadius: 8,
-                padding: '13px 26px',
-                cursor: 'pointer',
-                letterSpacing: '0.05em',
-                position: 'relative',
-                overflow: 'hidden',
-                boxShadow: '0 0 20px rgba(0,210,255,0.3), inset 0 0 20px rgba(0,210,255,0.1)',
-              }}
-            >
-              ./explore_projects.sh
-            </button>
-            <button
               onClick={() => setIsTerminalOpen(true)}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(0,210,255,0.1)'
+                e.currentTarget.style.transform = 'translateY(-2px)'
+                e.currentTarget.style.boxShadow = '0 4px 25px rgba(0,210,255,0.3), inset 0 0 20px rgba(0,210,255,0.1)'
+                e.currentTarget.style.borderColor = 'rgba(0,210,255,0.6)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'transparent'
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = '0 0 15px rgba(0,210,255,0.15), inset 0 0 10px rgba(0,210,255,0.05)'
+                e.currentTarget.style.borderColor = 'rgba(0,210,255,0.4)'
+              }}
               style={{
                 fontFamily: 'JetBrains Mono, monospace',
                 fontSize: 12,
                 fontWeight: 700,
                 background: 'transparent',
                 color: 'var(--cyan)',
-                border: '1px solid var(--border2)',
+                border: '1px solid rgba(0,210,255,0.4)',
                 borderRadius: 8,
                 padding: '13px 26px',
                 cursor: 'pointer',
                 letterSpacing: '0.05em',
-                backdropFilter: 'blur(10px)',
+                backdropFilter: 'blur(8px)',
+                boxShadow: '0 0 15px rgba(0,210,255,0.15), inset 0 0 10px rgba(0,210,255,0.05)',
+                transition: 'all 0.25s ease',
               }}
             >
               Who am I?
             </button>
             <button
-              onClick={() => {
-                // Add your resume file path here
-                const link = document.createElement('a')
-                link.href = '/resume.pdf' // Update with your actual resume file
-                link.download = 'Marouane_Ouazry_Resume.pdf'
-                document.body.appendChild(link)
-                link.click()
-                document.body.removeChild(link)
+              onClick={handleDownload}
+              disabled={isDownloading}
+              onMouseEnter={(e) => {
+                if (!isDownloading) {
+                  e.currentTarget.style.transform = 'translateY(-2px)'
+                  e.currentTarget.style.boxShadow = '0 4px 25px rgba(0,210,255,0.5), inset 0 0 25px rgba(146,95,255,0.15)'
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = '0 0 20px rgba(0,210,255,0.2), inset 0 0 20px rgba(146,95,255,0.1)'
               }}
               style={{
                 fontFamily: 'JetBrains Mono, monospace',
-                fontSize: 12,
+                fontSize: isDownloading ? 11 : 12,
                 fontWeight: 700,
-                background: 'linear-gradient(135deg, #00d2ff 0%, #925fff 100%)',
-                color: '#fff',
+                background: isDownloading ? 'rgba(0,0,0,0.6)' : 'linear-gradient(135deg, #00d2ff 0%, #925fff 100%)',
+                color: isDownloading ? '#00d2ff' : '#fff',
                 border: '1px solid rgba(0,210,255,0.3)',
                 borderRadius: 8,
-                padding: '13px 26px',
-                cursor: 'pointer',
+                padding: isDownloading ? '11px 18px' : '13px 26px',
+                cursor: isDownloading ? 'wait' : 'pointer',
                 letterSpacing: '0.05em',
                 position: 'relative',
                 overflow: 'hidden',
@@ -380,23 +250,33 @@ export default function Hero() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: 8,
+                minWidth: isDownloading ? 220 : 'auto',
+                transition: 'all 0.25s ease',
               }}
             >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <polyline points="7,10 12,15 17,10"/>
-                <line x1="12" y1="15" x2="12" y2="3"/>
-              </svg>
-              Download Resume
+              {isDownloading ? (
+                <span style={{ fontFamily: 'JetBrains Mono, monospace', whiteSpace: 'pre' }}>
+                  {renderProgressBar()}
+                </span>
+              ) : (
+                <>
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7,10 12,15 17,10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                  Download Resume
+                </>
+              )}
             </button>
           </div>
         </motion.div>
@@ -495,8 +375,8 @@ export default function Hero() {
           `}</style>
           <div
             style={{
-              width: 280,
-              height: 280,
+              width: 350,
+              height: 350,
               borderRadius: '50%',
               overflow: 'hidden',
               background: 'var(--bg2)',
@@ -506,10 +386,10 @@ export default function Hero() {
             }}
           >
             <Image
-              src="/profile.jpg"
+              src="/profile.png"
               alt="Marouane Ouazry"
-              width={280}
-              height={280}
+              width={350}
+              height={350}
               style={{
                 width: '100%',
                 height: '100%',
@@ -523,5 +403,182 @@ export default function Hero() {
 
       <TerminalModal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
     </section>
+  )
+}
+
+const termLines = [
+  { type: 'cmd', content: '$ cat ./me.txt' },
+  { type: 'out', content: "→ I'm Marouane, 24 — a 4th-year Computer Science student" },
+  { type: 'out', content: '  and aspiring Software Engineer at EMSI Casablanca.' },
+  { type: 'empty' },
+  { type: 'out', content: '→ Naturally curious and motivated, I enjoy tackling' },
+  { type: 'out', content: '  challenges and solving complex problems through code.' },
+  { type: 'out', content: '  Especially interested in new technologies, with a focus' },
+  { type: 'out', content: '  on Artificial Intelligence and modern web development.' },
+  { type: 'empty' },
+  { type: 'out', content: '→ Always learning and building projects that combine' },
+  { type: 'out', content: '  technical skills with real-world impact.' },
+  { type: 'empty' },
+  { type: 'out', content: '→ I build things because I want them to exist in the world.' },
+  { type: 'out', content: '  Not just to pass a course. Not just for a grade.' },
+  { type: 'out', content: '  To actually matter to someone using it.' },
+  { type: 'empty' },
+  { type: 'out', content: '→ Outside of code: gym, football, movies, TV shows,' },
+  { type: 'out', content: '  and music — often finding inspiration beyond the screen.' },
+  { type: 'cursor' },
+]
+
+function TerminalModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const [visibleLines, setVisibleLines] = useState(0)
+
+  useEffect(() => {
+    if (isOpen) {
+      setVisibleLines(0)
+      let i = 0
+      const interval = setInterval(() => {
+        i++
+        setVisibleLines(i)
+        if (i >= termLines.length) clearInterval(interval)
+      }, 90)
+      return () => clearInterval(interval)
+    }
+  }, [isOpen])
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape)
+      document.body.style.overflow = 'hidden'
+    }
+    return () => {
+      document.removeEventListener('keydown', handleEscape)
+      document.body.style.overflow = 'unset'
+    }
+  }, [isOpen, onClose])
+
+  if (!isOpen) return null
+
+  const getLineColor = (type: string) => {
+    switch (type) {
+      case 'cmd': return 'var(--cyan)'
+      case 'out': return 'var(--text)'
+      case 'val': return 'var(--green-l)'
+      case 'dim': return 'var(--dim)'
+      case 'hi': return 'var(--purple-l)'
+      case 'ok': return 'var(--green)'
+      default: return 'var(--text)'
+    }
+  }
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        background: 'rgba(3,7,18,0.9)',
+        backdropFilter: 'blur(12px)',
+        zIndex: 10001,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 20,
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: '#020810',
+          border: '1px solid var(--border)',
+          borderRadius: 12,
+          width: '100%',
+          maxWidth: 600,
+          overflow: 'hidden',
+          boxShadow: '0 25px 50px -12px rgba(0,0,0,0.8)',
+          marginTop: 80,
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            padding: '12px 18px',
+            background: 'var(--bg3)',
+            borderBottom: '1px solid var(--border)',
+          }}
+        >
+          <div 
+            style={{ width: 11, height: 11, borderRadius: '50%', background: '#ef4444', transition: 'box-shadow 0.2s', cursor: 'pointer' }}
+            onClick={onClose}
+            onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 0 8px #ef4444' }}
+            onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none' }}
+          />
+          <div 
+            style={{ width: 11, height: 11, borderRadius: '50%', background: '#f59e0b', transition: 'box-shadow 0.2s' }}
+            onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 0 8px #f59e0b' }}
+            onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none' }}
+          />
+          <div 
+            style={{ width: 11, height: 11, borderRadius: '50%', background: '#10b981', transition: 'box-shadow 0.2s' }}
+            onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 0 8px #10b981' }}
+            onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none' }}
+          />
+          <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--dim)', letterSpacing: '0.1em', marginLeft: 6 }}>
+            marouane@portfolio — whoami
+          </span>
+        </div>
+        <div style={{ padding: '22px 22px 12px', fontSize: 12, lineHeight: 1.8, minHeight: 320 }}>
+          {termLines.slice(0, visibleLines).map((line, i) => (
+            <div key={i}>
+              {line.type === 'empty' ? (
+                <br />
+              ) : line.type === 'cursor' ? (
+                <span
+                  style={{
+                    display: 'inline-block',
+                    width: 2,
+                    height: 14,
+                    background: 'var(--cyan)',
+                    verticalAlign: 'middle',
+                    marginLeft: 2,
+                    animation: 'blink 1s step-end infinite',
+                  }}
+                />
+              ) : line.type === 'cmd' ? (
+                <span>
+                  <span style={{ color: 'var(--purple)' }}>$</span>{' '}
+                  <span style={{ color: 'var(--cyan)' }}>{line.content?.slice(2) || ''}</span>
+                </span>
+              ) : (
+                <span style={{ color: getLineColor(line.type) }}>{line.content || ''}</span>
+              )}
+            </div>
+          ))}
+        </div>
+        <div
+          style={{
+            padding: '10px 22px',
+            borderTop: '1px solid var(--border)',
+            background: 'var(--bg3)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--cyan)', letterSpacing: '0.1em' }}>
+            Press ESC or click red button to close
+          </span>
+        </div>
+      </div>
+      <style jsx>{`
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+      `}</style>
+    </div>
   )
 }

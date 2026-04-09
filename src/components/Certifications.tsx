@@ -53,26 +53,30 @@ export default function Certifications() {
             <div
               key={i}
               style={{
-                background: 'var(--bg2)',
-                border: '1px solid var(--border)',
+                background: 'rgba(3,7,18,0.6)',
+                border: '1px solid rgba(0,210,255,0.2)',
                 borderRadius: 8,
                 padding: '14px 16px',
-                transition: 'border-color 0.2s, transform 0.2s',
+                backdropFilter: 'blur(12px)',
+                transition: 'border-color 0.25s, box-shadow 0.25s, transform 0.2s',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(124,58,237,0.4)'
+                e.currentTarget.style.borderColor = 'rgba(0,210,255,0.5)'
+                e.currentTarget.style.boxShadow = '0 0 20px rgba(0,210,255,0.15)'
                 e.currentTarget.style.transform = 'translateY(-2px)'
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'var(--border)'
+                e.currentTarget.style.borderColor = 'rgba(0,210,255,0.2)'
+                e.currentTarget.style.boxShadow = 'none'
                 e.currentTarget.style.transform = 'translateY(0)'
               }}
             >
               <div
                 style={{
-                  fontSize: 9,
-                  color: 'var(--purple-l)',
-                  letterSpacing: '0.1em',
+                  fontSize: 10,
+                  fontWeight: 700,
+                  color: 'var(--text)',
+                  letterSpacing: '0.08em',
                   textTransform: 'uppercase',
                   marginBottom: 5,
                 }}
@@ -82,7 +86,7 @@ export default function Certifications() {
               <div
                 style={{
                   fontSize: 11,
-                  color: 'var(--muted)',
+                  color: 'var(--purple-l)',
                   lineHeight: 1.5,
                 }}
               >
@@ -92,29 +96,32 @@ export default function Certifications() {
           ))}
           <div
             style={{
-              background: 'transparent',
-              border: '1px dashed var(--border2)',
+              background: 'rgba(3,7,18,0.4)',
+              border: '1px dashed rgba(0,210,255,0.25)',
               borderRadius: 8,
               padding: '14px 16px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              transition: 'border-color 0.2s, transform 0.2s',
+              backdropFilter: 'blur(8px)',
+              transition: 'border-color 0.25s, box-shadow 0.25s, transform 0.2s',
               cursor: 'default',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(124,58,237,0.4)'
+              e.currentTarget.style.borderColor = 'rgba(0,210,255,0.5)'
+              e.currentTarget.style.boxShadow = '0 0 15px rgba(0,210,255,0.1)'
               e.currentTarget.style.transform = 'translateY(-2px)'
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'var(--border2)'
+              e.currentTarget.style.borderColor = 'rgba(0,210,255,0.25)'
+              e.currentTarget.style.boxShadow = 'none'
               e.currentTarget.style.transform = 'translateY(0)'
             }}
           >
             <div
               style={{
                 fontSize: 11,
-                color: 'var(--purple-l)',
+                color: 'var(--cyan)',
                 fontStyle: 'italic',
               }}
             >

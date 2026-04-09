@@ -1,6 +1,6 @@
 'use client'
 
-import { useScrollReveal } from '@/hooks/useScrollReveal'
+import { motion, type Variants } from 'framer-motion'
 import { projects } from '@/lib/data'
 
 const accentColors: Record<string, string> = {
@@ -33,9 +33,29 @@ const tagColors: Record<string, { color: string; bg: string; border: string }> =
   'Expo': { color: 'var(--purple-l)', bg: 'rgba(124,58,237,0.06)', border: 'rgba(124,58,237,0.2)' },
 }
 
-export default function Projects() {
-  const ref = useScrollReveal()
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+}
 
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: 'easeOut',
+    },
+  },
+}
+
+export default function Projects() {
   return (
     <section
       id="projects"
@@ -70,14 +90,17 @@ export default function Projects() {
         </div>
 
         {/* Grid */}
-        <div
-          ref={ref}
-          className="reveal"
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
           style={{ display: 'flex', flexDirection: 'column', gap: 14 }}
         >
           {projects.map((project, i) => (
-            <a
+            <motion.a
               key={i}
+              variants={itemVariants}
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
@@ -174,9 +197,9 @@ export default function Projects() {
                   })}
                 </div>
               </div>
-            </a>
+            </motion.a>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

@@ -43,31 +43,27 @@ export default function Navbar() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '32px 48px',
+        padding: '18px 48px',
         background: 'rgba(3,7,18,0.85)',
         backdropFilter: 'blur(12px)',
         borderBottom: '1px solid var(--border)',
       }}
     >
       <a
-        href="#hero"
-        onClick={(e) => {
-          e.preventDefault()
-          window.scrollTo({ top: 0, behavior: 'smooth' })
-        }}
+        href="/"
         style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          width: 12,
-          height: 12,
+          width: 20,
+          height: 20,
           cursor: 'pointer',
         }}
       >
         <span
           style={{
-            width: 10,
-            height: 10,
+            width: 16,
+            height: 16,
             borderRadius: '50%',
             background: 'var(--teal)',
             animation: 'pulse 1.8s ease-in-out infinite',
@@ -76,45 +72,70 @@ export default function Navbar() {
       </a>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 40 }}>
-        <div style={{ display: 'flex', gap: 32 }}>
-          {navItems.map((item) => (
-            <a
-              key={item.id}
-              href={`#${item.id}`}
-              onMouseEnter={(e) => {
-                if (active !== item.id) {
-                  e.currentTarget.style.color = 'var(--text)'
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (active !== item.id) {
-                  e.currentTarget.style.color = '#94a3b8'
-                }
-              }}
-              style={{
-                fontSize: 12,
-                color: active === item.id ? 'var(--cyan)' : '#94a3b8',
-                letterSpacing: '0.14em',
-                textTransform: 'uppercase',
-                textDecoration: 'none',
-                transition: 'color 0.2s',
-                position: 'relative',
-              }}
-            >
-              {item.label}
-              <span
-                style={{
-                  position: 'absolute',
-                  bottom: -3,
-                  left: 0,
-                  width: active === item.id ? '100%' : 0,
-                  height: 1,
-                  background: 'var(--cyan)',
-                  transition: 'width 0.2s',
+        <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
+          {navItems.map((item) => {
+            const isContact = item.id === 'contact'
+            return (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                onMouseEnter={(e) => {
+                  if (isContact) {
+                    e.currentTarget.style.transform = 'translateY(-2px)'
+                    e.currentTarget.style.boxShadow = '0 4px 25px rgba(0,210,255,0.5), 0 0 30px rgba(146,95,255,0.3)'
+                  } else if (active !== item.id) {
+                    e.currentTarget.style.color = 'var(--text)'
+                  }
                 }}
-              />
-            </a>
-          ))}
+                onMouseLeave={(e) => {
+                  if (isContact) {
+                    e.currentTarget.style.transform = 'translateY(0)'
+                    e.currentTarget.style.boxShadow = '0 0 20px rgba(0,210,255,0.2)'
+                  } else if (active !== item.id) {
+                    e.currentTarget.style.color = '#94a3b8'
+                  }
+                }}
+                style={{
+                  fontSize: 12,
+                  fontWeight: 700,
+                  fontFamily: isContact ? 'JetBrains Mono, monospace' : 'inherit',
+                  color: isContact ? '#fff' : (active === item.id ? 'var(--cyan)' : '#94a3b8'),
+                  letterSpacing: '0.14em',
+                  textTransform: 'uppercase',
+                  textDecoration: 'none',
+                  transition: 'all 0.25s',
+                  position: 'relative',
+                  display: 'flex',
+                  alignItems: 'center',
+                  height: 36,
+                  padding: isContact ? '0 16px' : '0',
+                  border: isContact ? '1px solid rgba(0,210,255,0.3)' : 'none',
+                  borderRadius: isContact ? 8 : 0,
+                  background: isContact
+                    ? (active === item.id
+                      ? 'linear-gradient(135deg, #00d2ff 0%, #925fff 100%)'
+                      : 'linear-gradient(135deg, #00d2ff 0%, #925fff 100%)')
+                    : 'transparent',
+                  boxShadow: isContact ? '0 0 20px rgba(0,210,255,0.2)' : 'none',
+                }}
+              >
+                {item.label}
+                {!isContact && (
+                  <span
+                    style={{
+                      position: 'absolute',
+                      bottom: 6,
+                      left: 0,
+                      width: active === item.id ? '100%' : 0,
+                      height: 1,
+                      background: 'var(--cyan)',
+                      transition: 'width 0.2s',
+                    }}
+                  />
+                )}
+              </a>
+            )
+          })}
         </div>
       </div>
 

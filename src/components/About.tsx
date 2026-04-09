@@ -195,7 +195,7 @@ export default function About() {
           }}
         >
           {/* Stats */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <StatCard
               target={4}
               label="Years studying Computer Science"
@@ -217,8 +217,8 @@ export default function About() {
             <StatCard
               target={30}
               label="Languages &amp; frameworks mastered"
-              color="var(--orange)"
-              gradient="linear-gradient(90deg, var(--orange), transparent)"
+              color="#d97706"
+              gradient="linear-gradient(90deg, #d97706, transparent)"
             />
           </div>
 
@@ -230,6 +230,7 @@ export default function About() {
               borderRadius: 12,
               overflow: 'hidden',
               height: '100%',
+              boxShadow: '0 0 40px rgba(0,0,0,0.5)',
             }}
           >
             {/* Bar */}
@@ -249,6 +250,13 @@ export default function About() {
                   height: 11,
                   borderRadius: '50%',
                   background: '#ef4444',
+                  transition: 'box-shadow 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 0 8px #ef4444'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = 'none'
                 }}
               />
               <div
@@ -257,6 +265,13 @@ export default function About() {
                   height: 11,
                   borderRadius: '50%',
                   background: '#f59e0b',
+                  transition: 'box-shadow 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 0 8px #f59e0b'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = 'none'
                 }}
               />
               <div
@@ -265,11 +280,19 @@ export default function About() {
                   height: 11,
                   borderRadius: '50%',
                   background: '#10b981',
+                  transition: 'box-shadow 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 0 8px #10b981'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = 'none'
                 }}
               />
               <span
                 style={{
-                  fontSize: 10,
+                  fontSize: 11,
+                  fontWeight: 700,
                   color: 'var(--dim)',
                   letterSpacing: '0.1em',
                   marginLeft: 6,
@@ -280,7 +303,8 @@ export default function About() {
               <button
                 onClick={startAnimation}
                 style={{
-                  fontSize: 10,
+                  fontSize: 11,
+                  fontWeight: 700,
                   color: 'var(--cyan)',
                   letterSpacing: '0.1em',
                   background: 'transparent',
@@ -303,7 +327,7 @@ export default function About() {
             {/* Body */}
             <div
               ref={termRef}
-              style={{ padding: 22, fontSize: 11, lineHeight: 2.2 }}
+              style={{ padding: '22px 22px 0px', fontSize: 11, lineHeight: 1.8 }}
             >
               {termLines.slice(0, visibleLines).map((line, i) => (
                 <div key={i}>
@@ -331,6 +355,29 @@ export default function About() {
                   )}
                 </div>
               ))}
+            </div>
+            {/* Footer */}
+            <div
+              style={{
+                padding: '12px 22px',
+                borderTop: '1px solid var(--border)',
+                background: 'var(--bg3)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  color: 'var(--cyan)',
+                  letterSpacing: '0.1em',
+                  fontFamily: 'JetBrains Mono, monospace',
+                }}
+              >
+                [ SYSTEM LAST UPDATED: APRIL 2026 ]
+              </span>
             </div>
           </div>
         </div>
