@@ -22,7 +22,7 @@ export default function Hero() {
           clearInterval(interval)
           setTimeout(() => {
             const link = document.createElement('a')
-            link.href = '/Resume.pdf'
+            link.href = '/Marouane_Ouazry_Resume.pdf'
             link.download = 'Marouane_Ouazry_Resume.pdf'
             document.body.appendChild(link)
             link.click()
