@@ -422,7 +422,7 @@ function TerminalModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
           <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--cyan)', letterSpacing: '0.1em' }}>
-            Press ESC or click anywhere to close
+            Press ESC or click outside to close
           </span>
         </div>
       </div>
