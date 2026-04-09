@@ -24,7 +24,7 @@ export default function Hero() {
           clearInterval(interval)
           setTimeout(() => {
             const link = document.createElement('a')
-            link.href = '/Resume.pdf'
+            link.href = '/Marouane_Ouazry_Resume.pdf'
             link.download = 'Marouane_Ouazry_Resume.pdf'
             document.body.appendChild(link)
             link.click()
@@ -98,7 +98,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          style={{ flex: 1 }}
+          style={{ flex: 1 } as React.CSSProperties}
         >
           {/* Eyebrow */}
           <div
@@ -290,7 +290,7 @@ export default function Hero() {
             position: 'relative',
             marginLeft: 60,
             flexShrink: 0,
-          }}
+          } as React.CSSProperties}
         >
           {/* Glow effect */}
           <div
