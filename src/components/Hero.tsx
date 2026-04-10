@@ -21,13 +21,7 @@ export default function Hero() {
           hasDownloaded = true
           clearInterval(interval)
           setTimeout(() => {
-            const link = document.createElement('a')
-            link.href = '/Marouane_Ouazry_Resume.pdf'
-            link.download = 'Marouane_Ouazry_Resume.pdf'
-            link.target = '_blank'
-            document.body.appendChild(link)
-            link.click()
-            document.body.removeChild(link)
+            window.open('/Marouane_Ouazry_Resume.pdf', '_blank')
             setIsDownloading(false)
             setDownloadProgress(0)
           }, 300)
