@@ -7,6 +7,7 @@ import Image from 'next/image'
 
 export default function Hero() {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false)
+  const [isCvModalOpen, setIsCvModalOpen] = useState(false)
 
   return (
     <section
@@ -217,9 +218,8 @@ export default function Hero() {
             View Projects
           </a>
 
-          <a
-            href="/Marouane_Ouazry_Resume.pdf"
-            download="Marouane_Ouazry_Resume.pdf"
+          <button
+            onClick={() => setIsCvModalOpen(true)}
             onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 25px rgba(0,210,255,0.5)' } }
             onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(0,210,255,0.2)' } }
             style={{
@@ -232,7 +232,6 @@ export default function Hero() {
               padding: '13px 26px',
               cursor: 'pointer',
               display: 'flex', alignItems: 'center', gap: 8,
-              textDecoration: 'none',
               boxShadow: '0 0 20px rgba(0,210,255,0.2)',
               transition: 'all 0.25s ease',
             }}
@@ -243,7 +242,7 @@ export default function Hero() {
               <line x1="12" y1="15" x2="12" y2="3"/>
             </svg>
             Download Resume
-          </a>
+          </button>
         </motion.div>
       </div>
 
@@ -262,6 +261,7 @@ export default function Hero() {
       `}</style>
 
       <TerminalModal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
+      <CvLanguageModal isOpen={isCvModalOpen} onClose={() => setIsCvModalOpen(false)} />
     </section>
   )
 }
@@ -392,6 +392,170 @@ function TerminalModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
       <style jsx>{`
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
       `}</style>
+    </div>
+  )
+}
+
+function CvLanguageModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape)
+      document.body.style.overflow = 'hidden'
+    }
+    return () => {
+      document.removeEventListener('keydown', handleEscape)
+      document.body.style.overflow = 'unset'
+    }
+  }, [isOpen, onClose])
+
+  if (!isOpen) return null
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed', inset: 0,
+        background: 'rgba(3,7,18,0.9)',
+        backdropFilter: 'blur(12px)',
+        zIndex: 10001,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        padding: 20,
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: '#020810',
+          border: '1px solid var(--border)',
+          borderRadius: 12,
+          width: '100%', maxWidth: 400,
+          overflow: 'hidden',
+          boxShadow: '0 25px 50px -12px rgba(0,0,0,0.8)',
+        }}
+      >
+        {/* Modal bar */}
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 8,
+          padding: '12px 18px',
+          background: 'var(--bg3)',
+          borderBottom: '1px solid var(--border)',
+        }}>
+          <div onClick={onClose} style={{ width: 11, height: 11, borderRadius: '50%', background: '#ef4444', cursor: 'pointer' }}
+            onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 0 8px #ef4444' }}
+            onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none' }}
+          />
+          <div style={{ width: 11, height: 11, borderRadius: '50%', background: '#f59e0b' }} />
+          <div style={{ width: 11, height: 11, borderRadius: '50%', background: '#10b981' }} />
+          <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--dim)', letterSpacing: '0.1em', marginLeft: 6 }}>
+            marouane@portfolio — resume_download
+          </span>
+        </div>
+
+        {/* Modal body */}
+        <div style={{ padding: '32px 24px' }}>
+          <div style={{
+            fontSize: 14,
+            fontWeight: 700,
+            color: 'var(--text)',
+            marginBottom: 8,
+            textAlign: 'center',
+          }}>
+            Choose Resume Language
+          </div>
+          <div style={{
+            fontSize: 11,
+            color: 'var(--dim)',
+            marginBottom: 24,
+            textAlign: 'center',
+          }}>
+            Select your preferred language
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <a
+              href="/Marouane_Ouazry_Resume.pdf"
+              download="Marouane_Ouazry_Resume.pdf"
+              onClick={onClose}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 12,
+                background: 'var(--bg2)',
+                border: '1px solid var(--border)',
+                borderRadius: 8,
+                padding: '16px 20px',
+                textDecoration: 'none',
+                transition: 'border-color 0.2s, transform 0.2s',
+                cursor: 'pointer',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'var(--cyan)'
+                e.currentTarget.style.transform = 'translateY(-2px)'
+                e.currentTarget.style.boxShadow = '0 0 20px rgba(0,210,255,0.15)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'var(--border)'
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = 'none'
+              }}
+            >
+              <span style={{ fontSize: 24, color: 'var(--cyan)' }}>🇬🇧</span>
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)' }}>English</div>
+                <div style={{ fontSize: 10, color: 'var(--dim)' }}>Marouane_Ouazry_Resume.pdf</div>
+              </div>
+            </a>
+
+            <a
+              href="/Marouane_Ouazry_CV_FR.pdf"
+              download="Marouane_Ouazry_CV.pdf"
+              onClick={onClose}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 12,
+                background: 'var(--bg2)',
+                border: '1px solid var(--border)',
+                borderRadius: 8,
+                padding: '16px 20px',
+                textDecoration: 'none',
+                transition: 'border-color 0.2s, transform 0.2s',
+                cursor: 'pointer',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'var(--purple-l)'
+                e.currentTarget.style.transform = 'translateY(-2px)'
+                e.currentTarget.style.boxShadow = '0 0 20px rgba(124,58,237,0.15)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'var(--border)'
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = 'none'
+              }}
+            >
+              <span style={{ fontSize: 24, color: 'var(--purple-l)' }}>🇫🇷</span>
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)' }}>Français</div>
+                <div style={{ fontSize: 10, color: 'var(--dim)' }}>Marouane_Ouazry_Cv.pdf</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div style={{
+          padding: '10px 22px',
+          borderTop: '1px solid var(--border)',
+          background: 'var(--bg3)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--cyan)', letterSpacing: '0.1em' }}>
+            Press ESC or click outside to close
+          </span>
+        </div>
+      </div>
     </div>
   )
 }
