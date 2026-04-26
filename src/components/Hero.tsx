@@ -6,39 +6,7 @@ import { TypeAnimation } from 'react-type-animation'
 import Image from 'next/image'
 
 export default function Hero() {
-  const [downloadProgress, setDownloadProgress] = useState(0)
-  const [isDownloading, setIsDownloading] = useState(false)
   const [isTerminalOpen, setIsTerminalOpen] = useState(false)
-
-  const handleDownload = () => {
-    if (isDownloading) return
-    setIsDownloading(true)
-    setDownloadProgress(0)
-    let hasDownloaded = false
-    const interval = setInterval(() => {
-      setDownloadProgress((prev) => {
-        if (prev >= 100 && !hasDownloaded) {
-          hasDownloaded = true
-          clearInterval(interval)
-          setTimeout(() => {
-            window.open('/Marouane_Ouazry_Resume.pdf', '_blank')
-            setIsDownloading(false)
-            setDownloadProgress(0)
-          }, 300)
-          return 100
-        }
-        if (prev >= 100) return 100
-        return prev + Math.random() * 15 + 5
-      })
-    }, 150)
-  }
-
-  const renderProgressBar = () => {
-    const pct = Math.min(100, Math.max(0, Math.floor(downloadProgress)))
-    const filled = Math.min(20, Math.floor((pct / 100) * 20))
-    const bar = '█'.repeat(filled) + '░'.repeat(20 - filled)
-    return `[${bar}] ${pct}%`
-  }
 
   return (
     <section
@@ -249,41 +217,33 @@ export default function Hero() {
             View Projects
           </a>
 
-          <button
-            onClick={handleDownload}
-            disabled={isDownloading}
-            onMouseEnter={(e) => { if (!isDownloading) { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 25px rgba(0,210,255,0.5)' } }}
-            onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(0,210,255,0.2)' }}
+          <a
+            href="/Marouane_Ouazry_Resume.pdf"
+            download="Marouane_Ouazry_Resume.pdf"
+            onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 25px rgba(0,210,255,0.5)' } }
+            onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(0,210,255,0.2)' } }
             style={{
               fontFamily: 'JetBrains Mono, monospace',
-              fontSize: isDownloading ? 11 : 12, fontWeight: 700,
-              background: isDownloading ? 'rgba(0,0,0,0.6)' : 'linear-gradient(135deg, #00d2ff 0%, #925fff 100%)',
-              color: isDownloading ? '#00d2ff' : '#fff',
+              fontSize: 12, fontWeight: 700,
+              background: 'linear-gradient(135deg, #00d2ff 0%, #925fff 100%)',
+              color: '#fff',
               border: '1px solid rgba(0,210,255,0.3)',
               borderRadius: 8,
-              padding: isDownloading ? '11px 18px' : '13px 26px',
-              cursor: isDownloading ? 'wait' : 'pointer',
+              padding: '13px 26px',
+              cursor: 'pointer',
               display: 'flex', alignItems: 'center', gap: 8,
-              minWidth: isDownloading ? 220 : 'auto',
+              textDecoration: 'none',
               boxShadow: '0 0 20px rgba(0,210,255,0.2)',
               transition: 'all 0.25s ease',
             }}
           >
-            {isDownloading ? (
-              <span style={{ fontFamily: 'JetBrains Mono, monospace', whiteSpace: 'pre' }}>
-                {renderProgressBar()}
-              </span>
-            ) : (
-              <>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                  <polyline points="7,10 12,15 17,10"/>
-                  <line x1="12" y1="15" x2="12" y2="3"/>
-                </svg>
-                Download Resume
-              </>
-            )}
-          </button>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7,10 12,15 17,10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Download Resume
+          </a>
         </motion.div>
       </div>
 

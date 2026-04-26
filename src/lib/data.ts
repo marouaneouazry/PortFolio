@@ -41,6 +41,20 @@ export const projects = [
     accent: 'cyan',
     github: 'https://github.com/marouaneouazry/Fitness-Tracker',
   },
+  {
+  name: 'QuizApp — Android Mobile App',
+    desc: 'Android mobile quiz app focused on general knowledge, with full authentication and user management. Instant feedback on answers and score tracking.',
+    tags: ['Java', 'Android Native', 'Firebase Auth', 'Firestore'],
+    accent: 'green',
+    github: 'https://github.com/marouaneouazry/QuizAppMobile',
+  },
+  {
+    name: 'Invoice Management — Web App',
+    desc: 'Full-featured invoice management platform with dual-role access (Admin/User). Handles client & article management, dynamic invoice creation, PDF generation, payment tracking, and an analytics dashboard with monthly revenue charts.',
+    tags: ['React JS', 'Material UI', 'Firebase', 'JSON Server', 'jsPDF'],
+    accent: 'blue',
+    github: 'https://github.com/marouaneouazry/Invoice_Management',
+  },
 ]
 
 export const skills = [
