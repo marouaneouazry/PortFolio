@@ -96,4 +96,6 @@ export const certifications = [
   { issuer: 'Duke University', name: 'Java Programming & Software Engineering Fundamentals' },
   { issuer: 'Univ. of Hong Kong', name: 'Software Design & Project Management' },
   { issuer: 'Univ. de Lausanne', name: 'Introduction to C++' },
+  { issuer: 'Google', name: 'Agile Project Management' },
+
 ]
