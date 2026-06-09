@@ -14,6 +14,13 @@ export const projects = [
     github: 'https://github.com/marouaneouazry/OneShot',
   },
   {
+  name: 'MoviesApp — AI Movie Recommendation System',
+  desc: 'Full-stack movie discovery and recommendation platform featuring an Android client, FastAPI backend, and TensorFlow Lite AI model. Provides personalized movie suggestions based on user preferences, watch history, and 23-feature ML scoring system. Includes TMDb integration, watchlist, voice search, and nearby cinema locator using Google Maps.',
+  tags: ['Android (Java)', 'FastAPI', 'Python', 'TensorFlow Lite', 'Firebase', 'TMDb API', 'Google Maps API'],
+  accent: 'purple',
+  github: 'https://github.com/marouaneouazry/Movie-App',
+},
+  {
     name: 'Botola Analytics — Football Platform',
     desc: 'Analytics platform for the Moroccan Botola league powered by Neo4j graph database. Player comparison engine, ranking system, interactive visualizations.',
     tags: ['Java', 'Spring Boot', 'Neo4j / Cypher', 'React', 'Recharts', 'REST API'],
