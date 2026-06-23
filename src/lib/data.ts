@@ -1,4 +1,21 @@
 export const projects = [
+   {
+  name: 'Optical Fiber Network Management Platform',
+  desc: 'Enterprise-grade FTTH network management solution designed for telecom infrastructure supervision. Features interactive GIS mapping, fiber path management, datacenter and OLT administration, splitter and client box monitoring, client provisioning, capacity tracking, network topology visualization, KPI dashboards, and secure role-based administration.',
+  tags: [
+    'React',
+    'Spring Boot',
+    'MongoDB',
+    'Java',
+    'JWT',
+    'Leaflet',
+    'Telecom',
+    'FTTH',
+    'Network Management'
+  ],
+  accent: 'green',
+  github: 'https://github.com/marouaneouazry/Optical-Fiber-Management',
+  },
   {
     name: 'Lost & Found — Railway System',
     desc: 'Full-stack web platform for managing lost & found items across a railway network. Role-based access, admin dashboard, email notifications, multilingual support, dark mode.',
